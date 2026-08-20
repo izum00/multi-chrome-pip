@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pseudo PiP</title>
+  <link rel="stylesheet" href="viewer.css">
+</head>
+
+<body>
+  <main class="app">
+    <div id="stage" class="stage">
+      <video id="video" autoplay playsinline></video>
+
+      <!-- Top left: connection status + source page title -->
+      <div class="connection-info overlay-ui">
+        <span id="connectionDot" class="connection-dot connecting"></span>
+        <span id="siteName">Video Site</span>
+      </div>
+
+      <!-- Top right: help -->
+      <button id="helpButton" class="help-button overlay-ui" title="How to use" aria-label="How to use">
+        ?
+      </button>
+
+      <!-- Error -->
+      <div id="message" class="message hidden"></div>
+
+      <!-- Center -->
+      <div class="center-controls overlay-ui">
+        <button id="centerSeekBack" class="center-button" title="Seek back 5 seconds" aria-label="Seek back 5 seconds">
+          ↶
+          <span>5</span>
+        </button>
+
+        <button id="centerPlayPause" class="center-button center-play" title="Play/Pause" aria-label="Play/Pause">
+          ▶
+        </button>
+
+        <button id="centerSeekForward" class="center-button" title="Seek forward 5 seconds"
+          aria-label="Seek forward 5 seconds">
+          <span>5</span>
+          ↷
+        </button>
+      </div>
+
+      <!-- Bottom -->
+      <div class="bottom-area overlay-ui">
+        <div class="bottom-controls">
+
+          <!-- Play/Pause -->
+          <button id="playPause" class="control-button" title="Play/Pause" aria-label="Play/Pause">
+            ▶
+          </button>
+
+          <!-- Playback Speed -->
+          <div class="hover-control">
+            <button id="speedButton" class="control-button" title="Playback Speed" aria-label="Playback Speed">
+              1x
+            </button>
+
+            <div class="popup speed-popup">
+              <label for="speedRange" class="popup-label">
+                Playback Speed
+              </label>
+
+              <input id="speedRange" type="range" min="0.25" max="2" step="0.05" value="1">
+
+              <div class="quick-buttons">
+                <button data-speed="0.25">x0.25</button>
+                <button data-speed="0.5">x0.5</button>
+                <button data-speed="0.75">x0.75</button>
+                <button data-speed="1">x1</button>
+                <button data-speed="1.25">x1.25</button>
+                <button data-speed="1.5">x1.5</button>
+                <button data-speed="2">x2</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Volume -->
+          <div class="hover-control">
+            <button id="mute" class="control-button" title="Volume" aria-label="Volume">
+              🔊
+            </button>
+
+            <div class="popup volume-popup">
+              <label for="volumeRange" class="popup-label">
+                Volume
+              </label>
+
+              <input id="volumeRange" type="range" min="0" max="1" step="0.01" value="1">
+
+              <div class="quick-buttons volume-buttons">
+                <button data-volume="0">0%</button>
+                <button data-volume="0.5">50%</button>
+                <button data-volume="1">100%</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom-spacer"></div>
+
+          <!-- Fullscreen -->
+          <button id="fullscreen" class="control-button" title="Fullscreen" aria-label="Fullscreen">
+            ⛶
+          </button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-row">
+          <span id="currentTime" class="time-label">0:00</span>
+
+          <input id="progress" class="progress" type="range" min="0" max="100" step="0.1" value="0"
+            aria-label="Playback position">
+
+          <span id="duration" class="time-label">0:00</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="viewer.js"></script>
+</body>
+
+</html>

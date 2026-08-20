@@ -1,0 +1,491 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+body {
+  color: #fff;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+#video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background: #000;
+}
+
+/* =========================
+   UI Overlays (non-video)
+========================= */
+
+.overlay-ui {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+/*
+ * When mouse leaves or 3 seconds of inactivity
+ */
+.stage.controls-hidden .overlay-ui {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* =========================
+   Top Left
+========================= */
+
+.connection-info {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  max-width: calc(100% - 70px);
+
+  padding: 7px 11px;
+
+  border-radius: 999px;
+
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+
+  font-size: 13px;
+  font-weight: 600;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+#siteName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.connection-dot {
+  flex: 0 0 auto;
+
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #888;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.connection-dot.connecting {
+  color: #f0b429;
+  background: #f0b429;
+}
+
+.connection-dot.connected {
+  color: #35c759;
+  background: #35c759;
+}
+
+.connection-dot.disconnected {
+  color: #888;
+  background: #888;
+}
+
+.connection-dot.failed {
+  color: #ff453a;
+  background: #ff453a;
+}
+
+/* =========================
+   Top Right Help
+========================= */
+
+.help-button {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+
+  cursor: pointer;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.help-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.08);
+}
+
+/* =========================
+   Error Message
+========================= */
+
+.message {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+
+  max-width: min(80%, 600px);
+
+  padding: 14px 18px;
+
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 0.82);
+
+  color: #fff;
+
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+
+  z-index: 30;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================
+   Center Controls
+========================= */
+
+.center-controls {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  align-items: center;
+
+  gap: 34px;
+
+  z-index: 10;
+}
+
+.center-button {
+  width: 56px;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: 50%;
+
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+
+  cursor: pointer;
+
+  font-size: 28px;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.center-button:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.08);
+}
+
+.center-button span {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.center-play {
+  width: 68px;
+  height: 68px;
+  font-size: 32px;
+}
+
+/* =========================
+   Bottom Area
+========================= */
+
+.bottom-area {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  padding: 40px 14px 12px;
+
+  background:
+    linear-gradient(to top,
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.35) 55%,
+      transparent);
+
+  z-index: 15;
+}
+
+.bottom-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  min-height: 36px;
+}
+
+.bottom-spacer {
+  flex: 1;
+}
+
+/* =========================
+   Buttons
+========================= */
+
+.control-button {
+  width: 36px;
+  height: 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: transparent;
+  color: #fff;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  transition: background 0.15s ease;
+}
+
+.control-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* =========================
+   Popups (hover controls)
+========================= */
+
+.hover-control {
+  position: relative;
+}
+
+.popup {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 10px);
+
+  min-width: 280px;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  background: rgba(20, 20, 20, 0.94);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform: translateY(6px);
+
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease,
+    transform 0.15s ease;
+}
+
+.hover-control:hover .popup,
+.hover-control:focus-within .popup {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.popup-label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: rgba(255, 255, 255, 0.8);
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.popup input[type="range"] {
+  width: 100%;
+  margin: 0 0 10px;
+}
+
+input[type="range"] {
+  accent-color: #fff;
+}
+
+/* =========================
+   Preset Buttons
+========================= */
+
+.quick-buttons {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.quick-buttons button {
+  padding: 6px 4px;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+
+  cursor: pointer;
+
+  font-size: 11px;
+}
+
+.quick-buttons button:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.volume-buttons {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* =========================
+   Progress Bar
+========================= */
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 4px;
+}
+
+.time-label {
+  min-width: 40px;
+
+  color: rgba(255, 255, 255, 0.85);
+
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.progress {
+  flex: 1;
+  min-width: 0;
+  height: 16px;
+
+  margin: 0;
+
+  cursor: pointer;
+}
+
+/* =========================
+   Fullscreen
+========================= */
+
+.stage:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+}
+
+.stage:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+}
+
+/* =========================
+   Small Screens
+========================= */
+
+@media (max-width: 560px) {
+  .center-controls {
+    gap: 18px;
+  }
+
+  .center-button {
+    width: 48px;
+    height: 48px;
+  }
+
+  .center-play {
+    width: 60px;
+    height: 60px;
+  }
+
+  .popup {
+    min-width: 240px;
+  }
+
+  .quick-buttons {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
