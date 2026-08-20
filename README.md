@@ -25,9 +25,33 @@ The extension obtains a MediaStream from the original page's video element using
 ## Keeping the Pseudo-PiP Window Always on Top
 
 We recommend using [Microsoft PowerToys] to keep the Pseudo-PiP window always on top.
+
 It comes with many other useful features as well, so we highly recommend it. Press `ctrl + win + t` to keep the window always on top.
 
 You can install it with `winget install --id Microsoft.PowerToys --source winget` or from [GitHub](https://github.com/microsoft/PowerToys/releases/).
+
+## How to use
+Keyboard Shortcuts
+
+・Rewind 5 seconds: Left arrow key or 'j' key (can be held down)
+
+・Fast-forward 5 seconds: Right arrow key or 'k' key (can be held down)
+
+・Play/Pause: Space key or 'k' key
+
+・Jump to positions dividing the video into 10 segments: Keys 0–9
+
+・Toggle full screen: 'f' key
+
+・Increase volume by 10%: Up arrow key
+
+・Decrease volume by 10%: Down arrow key
+
+・Toggle mute: 'm' key
+
+・Slow down playback speed by 5%: ',' or '<' key
+
+・Speed ​​up playback speed by 5%: '.' or '>' key
 
 
 > [!WARNING]
@@ -45,7 +69,9 @@ You can install it with `winget install --id Microsoft.PowerToys --source winget
 
 ## 仕組み
 
-元ページの動画要素から `captureStream()` でMediaStreamを取得し、WebRTCを使って拡張機能ウィンドウへ中継します。そのため、動画URLを直接コピーできない `blob:` URLの動画でも動作する可能性があります。
+元ページの動画要素から `captureStream()` でMediaStreamを取得し、WebRTCを使って拡張機能ウィンドウへ中継します。
+
+そのため、動画URLを直接コピーできない `blob:` URLの動画でも動作する可能性があります。
 
 ## 制限
 
@@ -54,7 +80,33 @@ You can install it with `winget install --id Microsoft.PowerToys --source winget
 - 拡張機能ウィンドウは通常のChromeポップアップウィンドウです。
 
 ## 疑似PiPウィンドウを最前面に固定する
+
 最前面に疑似PiPウィンドウを表示するために、[Microsoft PowerToys]の使用を推奨します。
+
 いろいろな機能も一緒に入っているのでお勧めです。`ctrl + win + t`でタブを最前面に固定できます。
+
 インストールは `winget install --id Microsoft.PowerToys --source winget` または[Github](https://github.com/microsoft/PowerToys/releases/)からインストールできます。
 
+## 使い方
+
+キーボードショートカット
+
+・5秒戻る：左矢印キーまたはjキー(長押し可)
+
+・5秒進む：右矢印キーまたはkキー(長押し可)
+
+・再生/一時停止：スペースキーまたはkキー
+
+・開始～終了を10分割した位置に移動：0~9キー
+
+・フルスクリーン切り替え：fキー
+
+・音量を10%上げる：上向き矢印キー
+
+・音量を10%下げる：下向き矢印キー
+
+・ミュートの切り替え：mキー
+
+・再生速度を5%遅くする：,または<キー
+
+・再生速度を5%速くする：.または>キー
